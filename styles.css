@@ -122,6 +122,9 @@ body {
     linear-gradient(rgba(8, 34, 74, 0.58), rgba(8, 34, 74, 0.58)),
     url('https://github.com/mikevignery/Test_Site/blob/main/Charlotte%20Pool%20Image.png?raw=true') center/cover;
   color: var(--white);
+  z-index: 1;
+  overflow: hidden;
+  position: sticky;
 }
 
 .hero-content {
