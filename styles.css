@@ -304,7 +304,7 @@ button:hover {
 }
 
 .section {
-  padding: 72px 7%;
+  padding: /*72*/0px 7%;
 }
 
 .cards {
