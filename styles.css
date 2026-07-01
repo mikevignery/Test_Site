@@ -11,6 +11,125 @@
 * {
   box-sizing: border-box;
 }
+/* =========================================
+   POOL ACCORDION
+========================================= */
+
+.pool-accordion-section{
+    padding:80px 20px;
+    background:#ffffff;
+}
+
+.pool-accordion-section .container{
+    max-width:1100px;
+    margin:auto;
+}
+
+.section-heading{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.section-heading h2{
+    font-size:2.2rem;
+    color:#16395d;
+    margin-bottom:15px;
+}
+
+.section-heading p{
+    color:#666;
+    font-size:1.05rem;
+    max-width:700px;
+    margin:auto;
+    line-height:1.7;
+}
+
+.accordion{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.accordion-item{
+    border-radius:10px;
+    overflow:hidden;
+    border:1px solid #d8d8d8;
+}
+
+.accordion-header{
+    width:100%;
+    border:none;
+    background:#f2f2f2;
+    color:#000;
+    cursor:pointer;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:22px 28px;
+
+    font-size:1.15rem;
+    font-weight:600;
+
+    transition:.3s;
+}
+
+.accordion-header:hover{
+    background:#e8e8e8;
+}
+
+.accordion-content{
+    background:#ffffff;
+
+    max-height:0;
+    overflow:hidden;
+
+    transition:max-height .35s ease;
+
+    padding:0 28px;
+}
+
+.accordion-content p{
+    margin:22px 0 28px;
+    color:#555;
+    line-height:1.8;
+}
+
+/* ACTIVE */
+
+.accordion-item.active .accordion-header{
+    background:#0D6EFD;
+    color:#fff;
+}
+
+.accordion-item.active .accordion-content{
+    max-height:350px;
+}
+
+.icon{
+    font-size:1.5rem;
+    transition:.3s;
+    font-weight:bold;
+}
+
+.accordion-item.active .icon{
+    transform:rotate(45deg);
+    color:#fff;
+}
+
+@media(max-width:768px){
+
+.section-heading h2{
+    font-size:1.8rem;
+}
+
+.accordion-header{
+    font-size:1rem;
+    padding:18px 20px;
+}
+
+}
 .map-section {
   padding: 60px 20px;
   text-align: center;
