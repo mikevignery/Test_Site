@@ -206,6 +206,11 @@ button:hover {
   color: var(--white);
 }
 
+.banner.dark {
+  background: var(--dark-blue);
+  color: var(--navy);
+}
+
 .banner.light {
   background: var(--light-blue);
   color: var(--navy);
