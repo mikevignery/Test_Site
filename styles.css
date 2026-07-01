@@ -265,6 +265,13 @@ h1 {
   margin: 0 0 20px;
 }
 
+h5 {
+  color: --white;
+    font-size: clamp(2.4rem, 6vw, 4.8rem);
+  line-height: 1.05;
+  margin: 0 0 20px;
+}
+
 h2 {
   color: var(--navy);
   font-size: 2rem;
