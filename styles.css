@@ -99,7 +99,8 @@
 /* ACTIVE */
 
 .accordion-item.active .accordion-header{
-    background:#0D6EFD;
+  background: linear-gradient(135deg, var(--navy), var(--blue));  
+  /*background:#0D6EFD;*/
     color:#fff;
 }
 
