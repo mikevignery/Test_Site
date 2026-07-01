@@ -23,6 +23,7 @@
 .pool-accordion-section .container{
     max-width:1100px;
     margin:auto;
+  border-radius: none;
 }
 
 .section-heading{
