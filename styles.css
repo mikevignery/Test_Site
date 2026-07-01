@@ -202,7 +202,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 24px 7%;
+  padding: 12px/*24px*/ 7%;
   background: var(--white);
   box-shadow: 0 4px 20px rgba(8, 34, 74, 0.08);
   position: sticky;
