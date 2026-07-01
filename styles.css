@@ -357,6 +357,7 @@ button:hover {
   max-width: 720px;
   margin: 0 auto;
   color: var(--muted);
+  color: #ffffff !important;
 }
 
 .two-column,
