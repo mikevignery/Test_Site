@@ -356,8 +356,8 @@ button:hover {
 .page-hero p {
   max-width: 720px;
   margin: 0 auto;
-  color: var(--muted);
-  color: #ffffff !important;
+  /*color: var(--muted);*/
+  color: --white;
 }
 
 .two-column,
