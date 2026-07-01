@@ -120,7 +120,7 @@ body {
   padding: 80px 7%;
   background:
     linear-gradient(rgba(8, 34, 74, 0.58), rgba(8, 34, 74, 0.58)),
-    url('https://images.unsplash.com/photo-1575429198097-0414ec08e8cd?auto=format&fit=crop&w=1800&q=80') center/cover;
+    url('https://github.com/mikevignery/Test_Site/blob/main/Charlotte%20Pool%20Image.png?raw=true') center/cover;
   color: var(--white);
 }
 
