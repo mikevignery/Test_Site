@@ -133,7 +133,7 @@
 
 }
 .map-section {
-  padding: 60px 20px;
+  padding: 20/*60*/px 20px;
   text-align: center;
   background: #f4fbff;
 }
