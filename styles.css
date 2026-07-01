@@ -52,7 +52,7 @@
 }
 
 .accordion-item{
-    /*border-radius:10px;*/
+    border-radius:none;
     overflow:hidden;
     /*(border:1px solid #d8d8d8;*/
 }
