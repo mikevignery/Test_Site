@@ -260,7 +260,8 @@ body {
 }
 
 .p-white {
-  color: var(--white);
+  color: var(--light-blue);
+  font-weight: bold;
 }
   
 h1 {
