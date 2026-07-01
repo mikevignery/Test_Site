@@ -1,0 +1,122 @@
+<svg viewBox="0 0 1600 800" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Backyard swimming pool at a modern home">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#cfe8f7"/>
+      <stop offset="100%" stop-color="#eef7fc"/>
+    </linearGradient>
+    <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8fd0ea"/>
+      <stop offset="100%" stop-color="#2f8dc4"/>
+    </linearGradient>
+    <linearGradient id="roof" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3c4a57"/>
+      <stop offset="100%" stop-color="#26313b"/>
+    </linearGradient>
+  </defs>
+
+  <!-- sky -->
+  <rect x="0" y="0" width="1600" height="800" fill="url(#sky)"/>
+
+  <!-- distant tree line -->
+  <g fill="#3f6b4a">
+    <ellipse cx="80" cy="260" rx="140" ry="90"/>
+    <ellipse cx="240" cy="245" rx="160" ry="100"/>
+    <ellipse cx="420" cy="255" rx="150" ry="95"/>
+    <ellipse cx="600" cy="240" rx="170" ry="105"/>
+    <ellipse cx="790" cy="250" rx="160" ry="95"/>
+    <ellipse cx="960" cy="235" rx="150" ry="100"/>
+    <ellipse cx="1120" cy="250" rx="140" ry="90"/>
+  </g>
+  <g fill="#4f7f5b">
+    <ellipse cx="150" cy="275" rx="130" ry="75"/>
+    <ellipse cx="330" cy="265" rx="150" ry="80"/>
+    <ellipse cx="510" cy="270" rx="140" ry="78"/>
+    <ellipse cx="700" cy="260" rx="155" ry="82"/>
+    <ellipse cx="880" cy="270" rx="145" ry="78"/>
+    <ellipse cx="1040" cy="260" rx="140" ry="80"/>
+  </g>
+
+  <!-- lawn -->
+  <rect x="0" y="300" width="1600" height="500" fill="#cfe3c9"/>
+
+  <!-- rear shrub border -->
+  <g fill="#4f7f5b">
+    <ellipse cx="140" cy="330" rx="90" ry="34"/>
+    <ellipse cx="300" cy="335" rx="100" ry="36"/>
+    <ellipse cx="1450" cy="330" rx="90" ry="34"/>
+    <ellipse cx="1300" cy="335" rx="100" ry="36"/>
+  </g>
+
+  <!-- stone deck -->
+  <polygon points="0,800 0,470 640,360 1600,430 1600,800" fill="#e4dccb"/>
+
+  <!-- deck seam lines -->
+  <g stroke="#cfc3a9" stroke-width="2" opacity="0.6">
+    <line x1="0" y1="560" x2="1600" y2="560"/>
+    <line x1="0" y1="650" x2="1600" y2="650"/>
+    <line x1="0" y1="740" x2="1600" y2="740"/>
+  </g>
+
+  <!-- pool -->
+  <polygon points="60,470 640,395 900,430 320,780 0,780 0,560" fill="url(#water)" stroke="#1f5fa8" stroke-width="6"/>
+  <!-- water ripple lines -->
+  <g stroke="#eaf6fc" stroke-width="3" opacity="0.55" fill="none">
+    <path d="M60,520 Q300,540 560,500"/>
+    <path d="M40,590 Q320,610 620,555"/>
+    <path d="M40,660 Q340,685 680,610"/>
+    <path d="M60,730 Q360,760 760,665"/>
+  </g>
+
+  <!-- house -->
+  <g>
+    <polygon points="1180,180 1440,150 1600,190 1600,220 1180,250" fill="url(#roof)"/>
+    <rect x="1190" y="245" width="410" height="230" fill="#cfc0a4"/>
+    <rect x="1190" y="245" width="410" height="18" fill="#b9a884"/>
+    <!-- columns -->
+    <rect x="1230" y="255" width="16" height="220" fill="#f4f1ea"/>
+    <rect x="1360" y="250" width="18" height="225" fill="#f4f1ea"/>
+    <!-- windows -->
+    <rect x="1270" y="290" width="70" height="100" fill="#1c2733"/>
+    <rect x="1410" y="285" width="90" height="110" fill="#1c2733"/>
+    <rect x="1520" y="285" width="60" height="110" fill="#1c2733"/>
+  </g>
+
+  <!-- umbrella -->
+  <g>
+    <rect x="1148" y="430" width="8" height="130" fill="#8f9aa3"/>
+    <path d="M1080 430 Q1152 380 1224 430 Q1152 450 1080 430 Z" fill="#f4f1ea"/>
+    <path d="M1080 430 Q1152 380 1224 430" fill="none" stroke="#d8d2c4" stroke-width="3"/>
+  </g>
+
+  <!-- lounge chairs -->
+  <g fill="#f4f1ea" stroke="#d8d2c4" stroke-width="2">
+    <rect x="960" y="520" width="150" height="34" rx="8"/>
+    <rect x="960" y="500" width="55" height="34" rx="8"/>
+    <rect x="1140" y="540" width="150" height="34" rx="8"/>
+    <rect x="1140" y="520" width="55" height="34" rx="8"/>
+  </g>
+  <g fill="#c7ddb0">
+    <rect x="968" y="524" width="134" height="14" rx="6"/>
+    <rect x="1148" y="544" width="134" height="14" rx="6"/>
+  </g>
+
+  <!-- small potted plants -->
+  <g fill="#4f7f5b">
+    <circle cx="1330" cy="480" r="26"/>
+    <circle cx="1500" cy="480" r="26"/>
+  </g>
+  <g fill="#a9724f">
+    <rect x="1312" y="480" width="36" height="24" rx="3"/>
+    <rect x="1482" y="480" width="36" height="24" rx="3"/>
+  </g>
+
+  <!-- foreground palms, framing left edge -->
+  <g stroke="#274b30" stroke-width="10" fill="none" stroke-linecap="round">
+    <path d="M20 800 C10 600 30 480 70 400"/>
+  </g>
+  <g fill="#3f6b4a">
+    <ellipse cx="30" cy="380" rx="70" ry="26" transform="rotate(-20 30 380)"/>
+    <ellipse cx="60" cy="360" rx="75" ry="26" transform="rotate(10 60 360)"/>
+    <ellipse cx="90" cy="385" rx="70" ry="24" transform="rotate(45 90 385)"/>
+  </g>
+</svg>

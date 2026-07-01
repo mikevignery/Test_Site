@@ -1,0 +1,61 @@
+// Footer year
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// Mobile nav toggle
+const navToggle = document.getElementById('navToggle');
+const mainNav = document.getElementById('mainNav');
+
+navToggle.addEventListener('click', () => {
+  const isOpen = mainNav.classList.toggle('is-open');
+  navToggle.classList.toggle('is-open', isOpen);
+  navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+});
+
+// Close mobile nav when a link is clicked
+mainNav.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    mainNav.classList.remove('is-open');
+    navToggle.classList.remove('is-open');
+    navToggle.setAttribute('aria-expanded', 'false');
+  });
+});
+
+// Highlight active nav link based on scroll position
+const sections = document.querySelectorAll('section[id], header[id]');
+const navLinks = document.querySelectorAll('.main-nav a');
+
+const setActiveLink = () => {
+  let currentId = 'home';
+  const scrollPos = window.scrollY + 120;
+
+  sections.forEach(section => {
+    if (section.offsetTop <= scrollPos) {
+      currentId = section.id;
+    }
+  });
+
+  navLinks.forEach(link => {
+    link.classList.toggle('active', link.getAttribute('href') === `#${currentId}`);
+  });
+};
+
+window.addEventListener('scroll', setActiveLink);
+setActiveLink();
+
+// Contact form (front-end only demo — wire up to your own backend or form service)
+const contactForm = document.getElementById('contactForm');
+
+contactForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const submitBtn = contactForm.querySelector('button[type="submit"]');
+  const originalText = submitBtn.textContent;
+
+  submitBtn.textContent = 'Message Sent!';
+  submitBtn.disabled = true;
+
+  setTimeout(() => {
+    contactForm.reset();
+    submitBtn.textContent = originalText;
+    submitBtn.disabled = false;
+  }, 2200);
+});
