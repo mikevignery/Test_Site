@@ -226,12 +226,13 @@ body {
 .nav a {
   color: var(--navy);
   text-decoration: none;
-  font-weight: 700;
+  /*font-weight: 700;*/
 }
 
 .nav a:hover,
 .nav a.active {
   color: var(--blue);
+  font-weight:700;
 }
 
 .hero {
