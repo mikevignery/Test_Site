@@ -53,7 +53,7 @@
 .accordion-item{
     border-radius:10px;
     overflow:hidden;
-    border:1px solid #d8d8d8;
+    /*(border:1px solid #d8d8d8;*/
 }
 
 .accordion-header{
