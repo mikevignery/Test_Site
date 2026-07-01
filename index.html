@@ -48,6 +48,105 @@
       </div>
     </section>
 
+    <!-- =========================================
+     POOL CARE ACCORDION
+========================================== -->
+
+<section class="pool-accordion-section">
+    <div class="container">
+
+        <div class="section-heading">
+            <h2>Frequently Asked Pool Care Questions</h2>
+            <p>
+                Learn how routine maintenance protects your investment and keeps your
+                swimming pool crystal clear all season long.
+            </p>
+        </div>
+
+        <div class="accordion">
+
+            <!-- Item 1 -->
+            <div class="accordion-item active">
+                <button class="accordion-header">
+                    <span>Weekly Pool Maintenance</span>
+                    <span class="icon">+</span>
+                </button>
+
+                <div class="accordion-content">
+                    <p>
+                        Professional weekly pool service keeps your water clean,
+                        balanced, and ready to enjoy. During each visit we skim
+                        debris, brush walls and steps, vacuum when needed,
+                        empty baskets, test water chemistry, and inspect your
+                        equipment to ensure everything is operating correctly.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span>Why Water Chemistry Matters</span>
+                    <span class="icon">+</span>
+                </button>
+
+                <div class="accordion-content">
+                    <p>
+                        Proper chemical balance helps prevent algae growth,
+                        cloudy water, scaling, corrosion, and skin irritation.
+                        Regular testing of chlorine, pH, alkalinity, calcium
+                        hardness, and stabilizer levels helps extend the life
+                        of your pool equipment while providing a safe swimming
+                        environment.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span>Equipment Inspections</span>
+                    <span class="icon">+</span>
+                </button>
+
+                <div class="accordion-content">
+                    <p>
+                        Your pool's pump, filter, heater, valves, automation,
+                        and salt system work together every day. Routine
+                        inspections help identify small issues before they
+                        become expensive repairs, keeping your pool operating
+                        efficiently throughout the year.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<script>
+const accordionItems = document.querySelectorAll(".accordion-item");
+
+accordionItems.forEach(item => {
+
+    const header = item.querySelector(".accordion-header");
+
+    header.addEventListener("click", () => {
+
+        accordionItems.forEach(i => {
+            if(i !== item){
+                i.classList.remove("active");
+            }
+        });
+
+        item.classList.toggle("active");
+
+    });
+
+});
+</script>
+
     <section class="banner">
       <h2>Professional care for every season.</h2>
       <p>From routine maintenance to seasonal cleanups, we help make pool ownership easier.</p>
