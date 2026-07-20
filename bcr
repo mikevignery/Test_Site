@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Business Continuity Program Tracker</title>
+<style>
+:root{
+  --bg:#07111f;
+  --bg2:#0c1d33;
+  --glass:rgba(255,255,255,.10);
+  --glass-strong:rgba(255,255,255,.16);
+  --border:rgba(255,255,255,.18);
+  --text:#f4f8ff;
+  --muted:#a9b8cc;
+  --accent:#64d7ff;
+  --accent2:#7b7cff;
+  --success:#4ee0a0;
+  --warning:#ffc857;
+  --danger:#ff6b7a;
+  --shadow:0 18px 50px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  min-height:100vh;
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 15% 20%, rgba(100,215,255,.18), transparent 35%),
+    radial-gradient(circle at 85% 15%, rgba(123,124,255,.22), transparent 32%),
+    radial-gradient(circle at 75% 80%, rgba(78,224,160,.10), transparent 30%),
+    linear-gradient(135deg,var(--bg),var(--bg2));
+  overflow-x:hidden;
+}
+body:before,body:after{
+  content:"";
+  position:fixed;
+  border-radius:50%;
+  filter:blur(60px);
+  opacity:.45;
+  z-index:-1;
+}
+body:before{width:260px;height:260px;background:#2678ff;left:-80px;top:38%}
+body:after{width:320px;height:320px;background:#7447ff;right:-120px;bottom:-80px}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.app{display:grid;grid-template-columns:260px 1fr;min-height:100vh}
+.sidebar{
+  position:sticky;top:0;height:100vh;padding:24px 18px;
+  background:rgba(7,17,31,.58);
+  backdrop-filter:blur(22px) saturate(150%);
+  -webkit-backdrop-filter:blur(22px) saturate(150%);
+  border-right:1px solid var(--border);
+}
+.brand{display:flex;gap:12px;align-items:center;margin-bottom:26px}
+.logo{
+  width:44px;height:44px;border-radius:15px;
+  background:linear-gradient(145deg,rgba(255,255,255,.28),rgba(255,255,255,.06));
+  border:1px solid rgba(255,255,255,.26);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 12px 26px rgba(0,0,0,.22);
+  display:grid;place-items:center;font-weight:800;color:#dff7ff
+}
+.brand h1{font-size:16px;line-height:1.2;margin:0}
+.brand span{font-size:12px;color:var(--muted)}
+.nav{display:grid;gap:8px}
+.nav button{
+  width:100%;padding:12px 14px;border-radius:14px;border:1px solid transparent;
+  background:transparent;color:var(--muted);text-align:left;display:flex;gap:10px;align-items:center
+}
+.nav button:hover,.nav button.active{
+  color:#fff;background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.12)
+}
+.sidebar-footer{position:absolute;bottom:22px;left:18px;right:18px}
+.small{font-size:12px;color:var(--muted);line-height:1.5}
+.main{padding:26px;max-width:1600px;width:100%;margin:0 auto}
+.topbar{display:flex;justify-content:space-between;gap:18px;align-items:center;margin-bottom:22px}
+.title h2{font-size:28px;margin:0 0 6px}
+.title p{margin:0;color:var(--muted)}
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+.btn{
+  border:1px solid var(--border);color:#fff;padding:10px 14px;border-radius:13px;
+  background:rgba(255,255,255,.08);backdrop-filter:blur(12px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.12)
+}
+.btn:hover{background:rgba(255,255,255,.14)}
+.btn.primary{background:linear-gradient(135deg,rgba(100,215,255,.28),rgba(123,124,255,.30))}
+.grid{display:grid;gap:16px}
+.metrics{grid-template-columns:repeat(6,minmax(0,1fr));margin-bottom:18px}
+.glass{
+  background:linear-gradient(145deg,rgba(255,255,255,.13),rgba(255,255,255,.055));
+  border:1px solid var(--border);
+  box-shadow:var(--shadow),inset 0 1px 0 rgba(255,255,255,.18);
+  backdrop-filter:blur(20px) saturate(145%);
+  -webkit-backdrop-filter:blur(20px) saturate(145%);
+  border-radius:22px;
+}
+.metric{padding:17px;position:relative;overflow:hidden}
+.metric:after{
+  content:"";position:absolute;inset:auto -20px -40px auto;width:110px;height:110px;border-radius:50%;
+  background:radial-gradient(circle,rgba(100,215,255,.16),transparent 70%)
+}
+.metric .label{font-size:12px;color:var(--muted);margin-bottom:12px}
+.metric .value{font-size:28px;font-weight:750}
+.metric .sub{font-size:12px;color:var(--muted);margin-top:5px}
+.progress{height:7px;background:rgba(255,255,255,.08);border-radius:10px;overflow:hidden;margin-top:14px}
+.progress span{display:block;height:100%;border-radius:10px;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.layout{grid-template-columns:1.35fr .65fr;align-items:start}
+.panel{padding:20px}
+.panel h3{margin:0 0 4px;font-size:18px}
+.panel-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:16px}
+.panel-sub{font-size:12px;color:var(--muted)}
+.months{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.month-card{padding:15px;border-radius:17px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.10)}
+.month-card.active{outline:2px solid rgba(100,215,255,.45)}
+.month-card h4{margin:0 0 6px}
+.phase{display:inline-flex;font-size:11px;padding:5px 8px;border-radius:99px;background:rgba(255,255,255,.09);color:#dbe8ff;margin-bottom:10px}
+.task{display:flex;gap:9px;align-items:flex-start;margin:9px 0;color:#dce7f5;font-size:13px}
+.task input{margin-top:2px;accent-color:#67d5ff}
+.task.completed span{text-decoration:line-through;color:#7f91a7}
+.task-date{display:block;color:var(--muted);font-size:11px;margin-top:2px}
+.roadmap-table{width:100%;border-collapse:collapse}
+.roadmap-table th,.roadmap-table td{padding:12px 10px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top}
+.roadmap-table th{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.status{
+  display:inline-flex;align-items:center;gap:6px;border-radius:99px;padding:6px 9px;font-size:11px;
+  background:rgba(255,255,255,.08)
+}
+.dot{width:7px;height:7px;border-radius:50%}
+.red{background:var(--danger)}.amber{background:var(--warning)}.green{background:var(--success)}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.tab{padding:8px 11px;border-radius:11px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:var(--muted)}
+.tab.active{background:rgba(255,255,255,.12);color:#fff}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+input,select,textarea{
+  width:100%;border-radius:12px;border:1px solid rgba(255,255,255,.13);
+  background:rgba(8,18,34,.55);color:#fff;padding:10px 11px;outline:none
+}
+textarea{min-height:82px;resize:vertical}
+input:focus,select:focus,textarea:focus{border-color:rgba(100,215,255,.5);box-shadow:0 0 0 3px rgba(100,215,255,.08)}
+.list{display:grid;gap:10px}
+.item{
+  padding:13px;border-radius:15px;background:rgba(255,255,255,.055);
+  border:1px solid rgba(255,255,255,.09);display:grid;grid-template-columns:1fr auto;gap:12px
+}
+.item strong{display:block;font-size:14px}
+.item .meta{font-size:12px;color:var(--muted);margin-top:4px}
+.item-actions{display:flex;gap:6px;align-items:start}
+.icon-btn{border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:#fff;border-radius:10px;padding:7px 9px}
+.donut{
+  width:180px;height:180px;border-radius:50%;margin:10px auto 20px;
+  background:conic-gradient(var(--accent) 0deg, var(--accent2) var(--deg), rgba(255,255,255,.08) var(--deg));
+  display:grid;place-items:center;position:relative;
+}
+.donut:after{content:"";width:128px;height:128px;border-radius:50%;background:rgba(10,24,43,.92);border:1px solid rgba(255,255,255,.1)}
+.donut-label{position:absolute;z-index:2;text-align:center}
+.donut-label b{font-size:30px}.donut-label span{display:block;font-size:11px;color:var(--muted)}
+.notice{padding:12px 13px;border-radius:14px;background:rgba(255,200,87,.09);border:1px solid rgba(255,200,87,.20);font-size:12px;color:#ffe7aa}
+.section{display:none}.section.active{display:block}
+.footer{padding:20px 0 8px;text-align:center;color:var(--muted);font-size:12px}
+@media(max-width:1200px){.metrics{grid-template-columns:repeat(3,1fr)}.months{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:900px){.app{grid-template-columns:1fr}.sidebar{position:relative;height:auto;border-right:0;border-bottom:1px solid var(--border)}.sidebar-footer{position:static;margin-top:20px}.nav{grid-template-columns:repeat(3,1fr)}.layout{grid-template-columns:1fr}.main{padding:18px}.months{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.metrics{grid-template-columns:1fr 1fr}.months{grid-template-columns:1fr}.topbar{align-items:flex-start;flex-direction:column}.nav{grid-template-columns:1fr 1fr}.form-grid{grid-template-columns:1fr}.roadmap-table{font-size:12px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand">
+    <div class="logo">BC</div>
+    <div><h1>Continuity Command</h1><span>Annual Program Tracker</span></div>
+  </div>
+  <div class="nav">
+    <button class="active" data-section="dashboard">◫ Dashboard</button>
+    <button data-section="roadmap">⌁ Annual Roadmap</button>
+    <button data-section="checklist">✓ Executive Checklist</button>
+    <button data-section="enhancements">✦ App Enhancements</button>
+    <button data-section="actions">⚑ Corrective Actions</button>
+    <button data-section="coordinators">◎ Plan Coordinators</button>
+  </div>
+  <div class="sidebar-footer">
+    <div class="small">Data is stored locally in this browser. Use Export Data to share or back up progress.</div>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="topbar">
+    <div class="title">
+      <h2 id="pageTitle">Executive Dashboard</h2>
+      <p id="todayLabel"></p>
+    </div>
+    <div class="actions">
+      <button class="btn" onclick="exportData()">Export Data</button>
+      <button class="btn" onclick="document.getElementById('importFile').click()">Import Data</button>
+      <button class="btn primary" onclick="print()">Print View</button>
+      <input id="importFile" type="file" accept=".json" hidden />
+    </div>
+  </div>
+
+  <section id="dashboard" class="section active">
+    <div class="grid metrics" id="metrics"></div>
+    <div class="grid layout">
+      <div class="glass panel">
+        <div class="panel-head"><div><h3>Year-at-a-Glance</h3><div class="panel-sub">Monthly priorities, due dates, and progress</div></div></div>
+        <div class="months" id="monthCards"></div>
+      </div>
+      <div class="glass panel">
+        <div class="panel-head"><div><h3>Program Health</h3><div class="panel-sub">Overall completion across tracked items</div></div></div>
+        <div class="donut" id="donut"><div class="donut-label"><b id="healthPct">0%</b><span>Program Complete</span></div></div>
+        <div class="notice" id="nextMilestone"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="roadmap" class="section">
+    <div class="glass panel">
+      <div class="panel-head"><div><h3>Annual Roadmap</h3><div class="panel-sub">January through December program phases</div></div></div>
+      <div style="overflow:auto"><table class="roadmap-table"><thead><tr><th>Month</th><th>Phase</th><th>Primary Focus</th><th>Milestone</th><th>Benchmark</th><th>Application Enhancement</th><th>Status</th></tr></thead><tbody id="roadmapBody"></tbody></table></div>
+    </div>
+  </section>
+
+  <section id="checklist" class="section">
+    <div class="grid layout">
+      <div class="glass panel">
+        <div class="panel-head"><div><h3>Executive Checklist</h3><div class="panel-sub">Leadership-facing deliverables and due dates</div></div></div>
+        <div class="list" id="checklistList"></div>
+      </div>
+      <div class="glass panel">
+        <h3>Add Executive Item</h3><div class="panel-sub" style="margin-bottom:14px">Create a new milestone or approval item</div>
+        <div class="form-grid">
+          <input id="newCheckTitle" placeholder="Deliverable" />
+          <input id="newCheckDue" placeholder="Due date" />
+          <input id="newCheckOwner" placeholder="Executive owner" />
+          <select id="newCheckStatus"><option>Not Started</option><option>In Progress</option><option>Complete</option><option>At Risk</option></select>
+        </div>
+        <button class="btn primary" style="margin-top:12px" onclick="addChecklist()">Add Item</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="enhancements" class="section">
+    <div class="grid layout">
+      <div class="glass panel">
+        <div class="panel-head"><div><h3>Monthly Application Enhancements</h3><div class="panel-sub">One improvement opportunity reviewed each month</div></div></div>
+        <div class="list" id="enhancementList"></div>
+      </div>
+      <div class="glass panel">
+        <h3>Add Enhancement</h3><div class="panel-sub" style="margin-bottom:14px">Track a new capability or best-practice review</div>
+        <div class="form-grid">
+          <select id="enhMonth"></select>
+          <input id="enhTitle" placeholder="Enhancement title" />
+          <input id="enhValue" placeholder="Business value" />
+          <select id="enhPriority"><option>High</option><option>Medium</option><option>Low</option><option>Future</option></select>
+        </div>
+        <textarea id="enhNotes" placeholder="Notes or benchmark findings"></textarea>
+        <button class="btn primary" style="margin-top:12px" onclick="addEnhancement()">Add Enhancement</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="actions" class="section">
+    <div class="grid layout">
+      <div class="glass panel">
+        <div class="panel-head"><div><h3>Corrective Actions</h3><div class="panel-sub">Gaps, owners, due dates, and closure status</div></div></div>
+        <div class="list" id="actionList"></div>
+      </div>
+      <div class="glass panel">
+        <h3>Add Corrective Action</h3>
+        <div class="form-grid" style="margin-top:14px">
+          <input id="actGap" placeholder="Gap or finding" />
+          <select id="actRisk"><option>High</option><option>Medium</option><option>Low</option></select>
+          <input id="actOwner" placeholder="Owner" />
+          <input id="actDue" type="date" />
+        </div>
+        <textarea id="actNotes" placeholder="Recommended action or validation notes"></textarea>
+        <button class="btn primary" style="margin-top:12px" onclick="addAction()">Add Action</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="coordinators" class="section">
+    <div class="grid layout">
+      <div class="glass panel">
+        <div class="panel-head"><div><h3>Plan Coordinator Tracker</h3><div class="panel-sub">Department ownership and readiness status</div></div></div>
+        <div class="list" id="coordinatorList"></div>
+      </div>
+      <div class="glass panel">
+        <h3>Add Plan Coordinator</h3>
+        <div class="form-grid" style="margin-top:14px">
+          <input id="coordDept" placeholder="Department" />
+          <input id="coordName" placeholder="Coordinator" />
+          <input id="coordPlans" type="number" min="1" value="1" placeholder="Plan count" />
+          <select id="coordStatus"><option>Not Started</option><option>In Progress</option><option>Complete</option><option>At Risk</option></select>
+        </div>
+        <button class="btn primary" style="margin-top:12px" onclick="addCoordinator()">Add Coordinator</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">Business Continuity Program Tracker · Single-file GitHub-ready application</div>
+</main>
+</div>
+
+<script>
+const months=["January","February","March","April","May","June","July","August","September","October","November","December"];
+const defaults={
+ roadmap:[
+  {month:"January",phase:"BIA / BCP Updates",focus:"Kickoff, BIA refresh, ownership validation",milestone:"15% of plans approved",benchmark:"Review prior findings and candidate tabletop departments",enhancement:"Dashboard and user experience review",complete:false},
+  {month:"February",phase:"BIA / BCP Updates",focus:"Continue BIA and plan updates",milestone:"40% of plans approved",benchmark:"Review RTOs of one day or earlier",enhancement:"Test-per-plan tracking",complete:false},
+  {month:"March",phase:"BIA / BCP Updates",focus:"Finalize plan drafts and approvals",milestone:"80% of plans approved",benchmark:"Review critical vendor and application gaps",enhancement:"Product and service mapping",complete:false},
+  {month:"April",phase:"BIA / BCP Updates",focus:"Complete plan approvals",milestone:"100% of plans approved",benchmark:"Prioritize departments and scenarios",enhancement:"Executive print view",complete:false},
+  {month:"May",phase:"BCDR Month",focus:"BCDR awareness and ELT plan approvals",milestone:"ELT approvals complete",benchmark:"Scenario brainstorming and executive review",enhancement:"Workflow automation",complete:false},
+  {month:"June",phase:"Scenario Development",focus:"Create scenarios and begin 30-minute plan meetings",milestone:"25% of dependency reviews complete",benchmark:"Application and vendor dependency review",enhancement:"Vendor dependency visualization",complete:false},
+  {month:"July",phase:"Scenario Development",focus:"Continue 30-minute plan team meetings",milestone:"60% of dependency reviews complete",benchmark:"Review no-workaround and aggressive RTO gaps",enhancement:"Manual workaround repository",complete:false},
+  {month:"August",phase:"Scenario Development",focus:"Finish meetings and finalize scenarios",milestone:"100% of dependency reviews complete",benchmark:"Confirm tabletop scope and highest-risk gaps",enhancement:"RTO/RPO heat map",complete:false},
+  {month:"September",phase:"Tabletop Season",focus:"Execute tabletop exercise",milestone:"Tabletop completed and findings documented",benchmark:"Review lessons learned and action themes",enhancement:"Action item dashboard",complete:false},
+  {month:"October",phase:"Plan Remediation",focus:"Update plans with coordinators",milestone:"Corrective actions assigned and plans updated",benchmark:"Validate remediation priorities",enhancement:"Corrective action workflow",complete:false},
+  {month:"November",phase:"SMT Training",focus:"Senior Management Team training",milestone:"SMT training complete",benchmark:"Executive readiness review",enhancement:"Training analytics",complete:false},
+  {month:"December",phase:"Annual Review",focus:"Review performance and plan next year",milestone:"Lessons learned and next-year roadmap approved",benchmark:"Benchmark what worked, what did not, and maturity goals",enhancement:"AI-assisted plan quality review",complete:false}
+ ],
+ checklist:[
+  {title:"40% of plans approved",due:"End of February",owner:"BC Program",status:"Not Started"},
+  {title:"80% of plans approved",due:"End of March",owner:"BC Program",status:"Not Started"},
+  {title:"100% of plans approved",due:"End of April",owner:"ELT / Plan Owners",status:"Not Started"},
+  {title:"BCDR Month and ELT approvals complete",due:"End of May",owner:"BC Program / ELT",status:"Not Started"},
+  {title:"Dependency review meetings complete",due:"End of August",owner:"Plan Teams",status:"Not Started"},
+  {title:"Tabletop exercise complete",due:"End of September",owner:"BC Program",status:"Not Started"},
+  {title:"Plan remediation complete",due:"End of October",owner:"Plan Coordinators",status:"Not Started"},
+  {title:"SMT training complete",due:"End of November",owner:"SMT",status:"Not Started"},
+  {title:"Annual benchmark and next-year roadmap complete",due:"End of December",owner:"Leadership",status:"Not Started"}
+ ],
+ enhancements: months.map((m,i)=>({month:m,title:["Dashboard and UX review","Test-per-plan tracking","Product/service mapping","Executive print view","Workflow automation","Vendor dependency visualization","Manual workaround repository","RTO/RPO heat map","Action item dashboard","Corrective action workflow","Training analytics","AI-assisted plan quality review"][i],value:["Executive visibility","Audit readiness","Impact analysis","Reporting","Efficiency","Resilience","Recovery readiness","Risk visibility","Follow-up","Governance","Awareness","Continuous improvement"][i],priority:["High","High","High","Medium","Medium","High","High","High","High","High","Medium","Future"][i],notes:"",status:"Not Started"})),
+ actions:[],
+ coordinators:[]
+};
+let state=JSON.parse(localStorage.getItem("bcProgramState")||"null")||structuredClone(defaults);
+function save(){localStorage.setItem("bcProgramState",JSON.stringify(state));renderAll()}
+function statusClass(status){return status==="Complete"?"green":status==="At Risk"?"red":status==="In Progress"?"amber":"red"}
+function pct(n,d){return d?Math.round(n/d*100):0}
+function overall(){
+ const all=[
+  ...state.roadmap.map(x=>x.complete),
+  ...state.checklist.map(x=>x.status==="Complete"),
+  ...state.enhancements.map(x=>x.status==="Complete"),
+  ...state.actions.map(x=>x.status==="Complete"),
+  ...state.coordinators.map(x=>x.status==="Complete")
+ ];
+ return pct(all.filter(Boolean).length,all.length);
+}
+function metricCard(label,value,sub,progress){return `<div class="glass metric"><div class="label">${label}</div><div class="value">${value}</div><div class="sub">${sub}</div><div class="progress"><span style="width:${progress}%"></span></div></div>`}
+function renderMetrics(){
+ const planPct=pct(state.roadmap.filter(x=>x.complete).length,12);
+ const checkPct=pct(state.checklist.filter(x=>x.status==="Complete").length,state.checklist.length);
+ const enhPct=pct(state.enhancements.filter(x=>x.status==="Complete").length,state.enhancements.length);
+ const actionPct=pct(state.actions.filter(x=>x.status==="Complete").length,state.actions.length||1);
+ const coordPct=pct(state.coordinators.filter(x=>x.status==="Complete").length,state.coordinators.length||1);
+ document.getElementById("metrics").innerHTML=[
+  metricCard("Overall Program",overall()+"%","Combined completion",overall()),
+  metricCard("Roadmap",planPct+"%","Monthly phases complete",planPct),
+  metricCard("Executive Items",checkPct+"%","Leadership deliverables",checkPct),
+  metricCard("App Enhancements",enhPct+"%","Monthly improvements",enhPct),
+  metricCard("Corrective Actions",actionPct+"%","Findings closed",actionPct),
+  metricCard("Plan Teams",coordPct+"%","Coordinator readiness",coordPct)
+ ].join("");
+}
+function renderMonths(){
+ const current=new Date().getMonth();
+ document.getElementById("monthCards").innerHTML=state.roadmap.map((m,i)=>`
+ <div class="month-card ${i===current?"active":""}">
+   <span class="phase">${m.phase}</span><h4>${m.month}</h4>
+   <div class="task ${m.complete?"completed":""}">
+    <input type="checkbox" ${m.complete?"checked":""} onchange="state.roadmap[${i}].complete=this.checked;save()">
+    <span>${m.focus}<span class="task-date">${m.milestone}</span></span>
+   </div>
+ </div>`).join("");
+}
+function renderRoadmap(){
+ document.getElementById("roadmapBody").innerHTML=state.roadmap.map((m,i)=>`<tr>
+ <td><strong>${m.month}</strong></td><td>${m.phase}</td><td>${m.focus}</td><td>${m.milestone}</td><td>${m.benchmark}</td><td>${m.enhancement}</td>
+ <td><button class="status" onclick="state.roadmap[${i}].complete=!state.roadmap[${i}].complete;save()"><span class="dot ${m.complete?"green":"red"}"></span>${m.complete?"Complete":"Open"}</button></td></tr>`).join("");
+}
+function cycleStatus(kind,index){
+ const order=["Not Started","In Progress","Complete","At Risk"];
+ const item=state[kind][index]; item.status=order[(order.indexOf(item.status)+1)%order.length]; save()
+}
+function renderChecklist(){
+ document.getElementById("checklistList").innerHTML=state.checklist.map((x,i)=>`<div class="item"><div><strong>${x.title}</strong><div class="meta">${x.due} · ${x.owner}</div><div style="margin-top:8px"><button class="status" onclick="cycleStatus('checklist',${i})"><span class="dot ${statusClass(x.status)}"></span>${x.status}</button></div></div><div class="item-actions"><button class="icon-btn" onclick="state.checklist.splice(${i},1);save()">×</button></div></div>`).join("");
+}
+function renderEnhancements(){
+ document.getElementById("enhancementList").innerHTML=state.enhancements.map((x,i)=>`<div class="item"><div><strong>${x.month}: ${x.title}</strong><div class="meta">${x.value} · Priority: ${x.priority}${x.notes?" · "+x.notes:""}</div><div style="margin-top:8px"><button class="status" onclick="cycleStatus('enhancements',${i})"><span class="dot ${statusClass(x.status)}"></span>${x.status}</button></div></div><div class="item-actions"><button class="icon-btn" onclick="state.enhancements.splice(${i},1);save()">×</button></div></div>`).join("");
+}
+function renderActions(){
+ document.getElementById("actionList").innerHTML=state.actions.length?state.actions.map((x,i)=>`<div class="item"><div><strong>${x.gap}</strong><div class="meta">${x.risk} risk · ${x.owner||"Unassigned"} · Due ${x.due||"TBD"}${x.notes?" · "+x.notes:""}</div><div style="margin-top:8px"><button class="status" onclick="cycleStatus('actions',${i})"><span class="dot ${statusClass(x.status)}"></span>${x.status}</button></div></div><div class="item-actions"><button class="icon-btn" onclick="state.actions.splice(${i},1);save()">×</button></div></div>`).join(""):`<div class="small">No corrective actions added yet.</div>`;
+}
+function renderCoordinators(){
+ document.getElementById("coordinatorList").innerHTML=state.coordinators.length?state.coordinators.map((x,i)=>`<div class="item"><div><strong>${x.department}</strong><div class="meta">${x.name} · ${x.plans} plan(s)</div><div style="margin-top:8px"><button class="status" onclick="cycleStatus('coordinators',${i})"><span class="dot ${statusClass(x.status)}"></span>${x.status}</button></div></div><div class="item-actions"><button class="icon-btn" onclick="state.coordinators.splice(${i},1);save()">×</button></div></div>`).join(""):`<div class="small">No plan coordinators added yet.</div>`;
+}
+function renderHealth(){
+ const v=overall();document.getElementById("healthPct").textContent=v+"%";document.getElementById("donut").style.setProperty("--deg",(v*3.6)+"deg");
+ const current=new Date().getMonth();const next=state.roadmap.find((x,i)=>i>=current&&!x.complete)||state.roadmap.find(x=>!x.complete);
+ document.getElementById("nextMilestone").innerHTML=next?`<strong>Next milestone:</strong> ${next.month} — ${next.milestone}`:"All annual milestones are complete.";
+}
+function addChecklist(){
+ const t=newCheckTitle.value.trim();if(!t)return;
+ state.checklist.push({title:t,due:newCheckDue.value.trim()||"TBD",owner:newCheckOwner.value.trim()||"Unassigned",status:newCheckStatus.value});
+ newCheckTitle.value=newCheckDue.value=newCheckOwner.value="";save()
+}
+function addEnhancement(){
+ const t=enhTitle.value.trim();if(!t)return;
+ state.enhancements.push({month:enhMonth.value,title:t,value:enhValue.value.trim()||"Continuous improvement",priority:enhPriority.value,notes:enhNotes.value.trim(),status:"Not Started"});
+ enhTitle.value=enhValue.value=enhNotes.value="";save()
+}
+function addAction(){
+ const g=actGap.value.trim();if(!g)return;
+ state.actions.push({gap:g,risk:actRisk.value,owner:actOwner.value.trim(),due:actDue.value,notes:actNotes.value.trim(),status:"Not Started"});
+ actGap.value=actOwner.value=actDue.value=actNotes.value="";save()
+}
+function addCoordinator(){
+ const d=coordDept.value.trim(),n=coordName.value.trim();if(!d||!n)return;
+ state.coordinators.push({department:d,name:n,plans:Number(coordPlans.value)||1,status:coordStatus.value});
+ coordDept.value=coordName.value="";coordPlans.value=1;save()
+}
+function exportData(){
+ const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"});
+ const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="bc-program-data.json";a.click();URL.revokeObjectURL(a.href)
+}
+document.getElementById("importFile").addEventListener("change",e=>{
+ const f=e.target.files[0];if(!f)return;const r=new FileReader();
+ r.onload=()=>{try{state=JSON.parse(r.result);save()}catch{alert("The selected file is not valid BC program JSON.")}};r.readAsText(f)
+});
+document.querySelectorAll(".nav button").forEach(btn=>btn.addEventListener("click",()=>{
+ document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));btn.classList.add("active");
+ document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));document.getElementById(btn.dataset.section).classList.add("active");
+ document.getElementById("pageTitle").textContent=btn.textContent.trim().replace(/^[^\w]+/,"")
+}));
+function renderAll(){renderMetrics();renderMonths();renderRoadmap();renderChecklist();renderEnhancements();renderActions();renderCoordinators();renderHealth()}
+document.getElementById("todayLabel").textContent=new Date().toLocaleDateString(undefined,{weekday:"long",year:"numeric",month:"long",day:"numeric"});
+document.getElementById("enhMonth").innerHTML=months.map(m=>`<option>${m}</option>`).join("");
+renderAll();
+</script>
+</body>
+</html>
